@@ -1,0 +1,9 @@
+@import '@ionic/angular/css/core.css';
+@import '@ionic/angular/css/normalize.css';
+@import '@ionic/angular/css/structure.css';
+@import '@ionic/angular/css/typography.css';
+:root { font-family: Inter, system-ui, -apple-system, 'Segoe UI', sans-serif; }
+* { box-sizing: border-box; }
+body { margin: 0; background:#080b0a; }
+button,input { font: inherit; }
+button { cursor: pointer; }

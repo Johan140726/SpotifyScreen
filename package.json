@@ -1,0 +1,14 @@
+{
+  "name": "pantallasgrillas-spotify-ionic-jwt",
+  "version": "3.0.0",
+  "private": true,
+  "description": "Dos pantallas de practica Ionic Angular con login JWT propio y Google Identity Services",
+  "scripts": {
+    "instalar": "npm install --prefix backend && npm install --prefix frontend",
+    "backend": "npm run dev --prefix backend",
+    "frontend": "npm start --prefix frontend",
+    "test:backend": "npm test --prefix backend",
+    "build:frontend": "npm run build --prefix frontend"
+  },
+  "engines": {"node": ">=22"}
+}

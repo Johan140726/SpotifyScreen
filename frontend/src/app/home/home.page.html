@@ -1,0 +1,44 @@
+<ion-content class="music-content" [fullscreen]="true">
+  <main class="music-viewport">
+    <ion-grid class="spotify-grid">
+      <ion-row class="player-heading ion-align-items-center">
+        <ion-col size="2" class="side-left"><button class="icon-action" type="button" (click)="logout()" aria-label="Cerrar sesión y volver al login" [disabled]="loggingOut"><ion-icon name="chevron-down-outline"></ion-icon></button></ion-col>
+        <ion-col size="8" class="heading-center"><span>PLAYING FROM LIBRARY</span><strong>Liked Songs</strong></ion-col>
+        <ion-col size="2" class="side-right"><button class="icon-action" type="button" (click)="showMenu=!showMenu" aria-label="Opciones"><ion-icon name="ellipsis-horizontal"></ion-icon></button></ion-col>
+      </ion-row>
+      <div class="menu-popup" *ngIf="showMenu"><button type="button" (click)="showMenu=false; logout()">Cerrar sesión</button><button type="button" (click)="showMenu=false; openOfficial()">Abrir canción oficial</button></div>
+
+      <ion-row class="cover-row">
+        <ion-col size="12"><div class="album-cover" role="img" aria-label="Carátula verde con nota musical blanca"><ion-icon name="musical-notes"></ion-icon></div></ion-col>
+      </ion-row>
+
+      <ion-row class="song-details ion-align-items-center">
+        <ion-col size="10"><h1>{{title}}</h1><p>{{artist}}</p></ion-col>
+        <ion-col size="2" class="heart-side"><button type="button" class="icon-action heart-action" (click)="liked=!liked" [attr.aria-label]="liked ? 'Quitar de favoritos' : 'Agregar a favoritos'"><ion-icon [name]="liked ? 'heart' : 'heart-outline'"></ion-icon></button></ion-col>
+      </ion-row>
+
+      <ion-row class="progress-row">
+        <ion-col size="12">
+          <input class="progress-range" type="range" min="0" max="100" step="0.1" [value]="percent" (input)="seek($event)" [style.--played]="percent + '%'" [disabled]="!audioAvailable" aria-label="Progreso de canción" />
+          <div class="time-row"><span>{{ currentLabel }}</span><span>{{ durationLabel }}</span></div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="controls-row ion-align-items-center">
+        <ion-col size="2"><button type="button" class="icon-action secondary" [class.active]="shuffled" (click)="shuffled=!shuffled" aria-label="Aleatorio"><ion-icon name="shuffle-outline"></ion-icon></button></ion-col>
+        <ion-col size="2"><button type="button" class="icon-action main-side" (click)="restart()" aria-label="Anterior"><ion-icon name="play-skip-back"></ion-icon></button></ion-col>
+        <ion-col size="4"><button type="button" class="play-button" (click)="togglePlay()" [attr.aria-label]="audioAvailable ? (isPlaying ? 'Pausar' : 'Reproducir') : 'Escuchar canción oficial en YouTube'"><ion-icon [name]="isPlaying ? 'pause' : 'play'"></ion-icon></button></ion-col>
+        <ion-col size="2"><button type="button" class="icon-action main-side" (click)="restart()" aria-label="Siguiente"><ion-icon name="play-skip-forward"></ion-icon></button></ion-col>
+        <ion-col size="2"><button type="button" class="icon-action secondary" [class.active]="repeated" (click)="repeated=!repeated" aria-label="Repetir"><ion-icon name="repeat-outline"></ion-icon></button></ion-col>
+      </ion-row>
+
+      <ion-row class="bottom-row ion-align-items-center">
+        <ion-col size="6" class="devices"><button type="button" class="icon-action dimmed" (click)="showTrackInfo()" aria-label="Detalles de reproducción"><ion-icon name="phone-portrait-outline"></ion-icon></button></ion-col>
+        <ion-col size="6" class="more-actions"><button type="button" class="icon-action dimmed" (click)="openOfficial()" aria-label="Abrir grabación oficial"><ion-icon name="share-outline"></ion-icon></button><button type="button" class="icon-action dimmed" (click)="showTrackInfo()" aria-label="Lista de canciones"><ion-icon name="list-outline"></ion-icon></button></ion-col>
+      </ion-row>
+      <ion-row *ngIf="message" class="player-note"><ion-col size="12"><p role="status">{{ message }}</p></ion-col></ion-row>
+      <ion-row class="no-official"><ion-col size="12"><small>Maquetación académica · No oficial</small></ion-col></ion-row>
+    </ion-grid>
+    <audio #songAudio [src]="audioAvailable ? audioSrc : null" (loadedmetadata)="metadata()" (timeupdate)="tick()" (ended)="ended()" (pause)="isPlaying=false" preload="metadata"></audio>
+  </main>
+</ion-content>

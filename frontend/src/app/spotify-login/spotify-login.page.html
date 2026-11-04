@@ -1,0 +1,103 @@
+<ion-content [fullscreen]="true" class="login-screen">
+  <main class="login-container">
+    <section class="login-box" aria-label="Inicio de sesión del reproductor de demostración">
+        <header class="logo-heading">
+         <div class="spotify-mark">
+        <img
+      src="assets/icons/spotify-icon.svg"
+      alt="Spotify"
+        />
+  </div>
+  <span>Spotify</span>
+</header>
+      <h1>Log in to continue.</h1>
+
+      <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+        <div class="field">
+          <label for="email">Email or username</label>
+          <div class="field-box" [class.field-invalid]="emailInvalid">
+            <input id="email" type="email" autocomplete="username" inputmode="email" formControlName="email" placeholder="Email or username" [attr.aria-invalid]="emailInvalid" />
+            <ion-icon name="mail-outline" aria-hidden="true"></ion-icon>
+          </div>
+          <p class="field-error" *ngIf="emailInvalid">{{ email.hasError('required') ? 'El correo es obligatorio.' : 'Escribe un correo válido, por ejemplo usuario@correo.com.' }}</p>
+        </div>
+
+        <div class="field">
+          <label for="password">Password</label>
+          <div class="field-box" [class.field-invalid]="passwordInvalid">
+            <input id="password" [type]="showPassword ? 'text' : 'password'" autocomplete="current-password" formControlName="password" placeholder="Password" [attr.aria-invalid]="passwordInvalid" />
+            <button type="button" class="show-pass" (click)="showPassword = !showPassword" [attr.aria-label]="showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'"><ion-icon [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"></ion-icon></button>
+          </div>
+          <div *ngIf="passwordInvalid" class="password-hints" role="status">
+            <span [class.ok]="checks.length">8–128 caracteres</span>
+            <span [class.ok]="checks.upperLower">Mayúscula y minúscula</span>
+            <span [class.ok]="checks.number">Un número</span>
+            <span [class.ok]="checks.special">Un símbolo</span>
+          </div>
+          <button type="button" class="forgot" (click)="help()">Reset Password?</button>
+        </div>
+
+        <label class="remember"><span>Remember me</span><span class="switch"><input type="checkbox" formControlName="remember" /><span class="switch-track"></span></span></label>
+        <p *ngIf="apiError" class="alert" role="alert">{{apiError}}</p>
+        <p *ngIf="notice" class="notice" role="status">{{notice}}</p>
+        <button class="login-submit" type="submit" [disabled]="loading">{{ loading ? 'VALIDANDO...' : 'LOG IN' }}</button>
+      </form>
+
+      <div class="divider"><span>OR</span></div>
+      
+<section class="social-buttons"
+         aria-label="Opciones de inicio de sesión">
+
+  <!-- Facebook -->
+  <button type="button"
+          class="social social-facebook"
+          (click)="otherButton()">
+
+    <img src="assets/icons/facebook-tile.svg"
+         class="social-icon"
+         alt="" />
+
+    <span>Continue with Facebook</span>
+  </button>
+
+  <!-- Google -->
+  <div class="google-slot">
+
+    <div #googleButton
+         class="google-official"
+         [class.visible]="googleReady"
+         aria-label="Iniciar sesión con Google">
+    </div>
+
+    <button *ngIf="!googleReady"
+            type="button"
+            class="social social-google"
+            (click)="googleHelp()">
+
+      <img src="assets/icons/google-icon.svg"
+           class="social-icon"
+           alt="" />
+
+      <span>Continue with Google</span>
+    </button>
+  </div>
+
+  <!-- Apple -->
+  <button type="button"
+          class="social social-apple"
+          (click)="otherButton()">
+
+    <img src="assets/icons/apple-tile.svg"
+         class="social-icon"
+         alt="" />
+
+    <span>Continue with Apple</span>
+  </button>
+
+</section>
+
+      <p class="signup">Don't have an account? <button type="button" (click)="help()">SIGNUP</button></p>
+      <footer>SETTINGS <span> DEMO Spotify Screen JWT</span></footer>
+    </section>
+  </main>
+</ion-content>
