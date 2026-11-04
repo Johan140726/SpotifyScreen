@@ -78,7 +78,6 @@ Formulario con colores oscuros, identidad visual estilo Spotify, campos validado
 
 **Incluye:** correo obligatorio con formato válido, contraseña obligatoria con requisitos, control para mostrar/ocultar, opción **Remember me** y mensajes de error.
 
-> **Google:** su autenticación real se habilita al configurar `GOOGLE_CLIENT_ID`. Los botones de Facebook y Apple son visuales y no realizan autenticación.
 
 ###  Pantalla del reproductor
 
